@@ -39,3 +39,6 @@ prometheus:
 
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
+
+crds:
+  enabled: true
