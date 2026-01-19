@@ -12,7 +12,7 @@ extraVolumeMounts:
 extraVolumes:
 - name: clouddns-credentials
   secret:
-    secretName: google-clouddns-enc
+    secretName: google-clouddns
 sources:
 - ingress
 - service
