@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jupyterlab
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+  - repoURL: https://jupyterhub.github.io/helm-chart/
+    chart: jupyterhub
+    targetRevision: 4.3.2
+    helm:
+      valueFiles:
+        - $values/helm-values/jupyterlab-values.yaml
+      timeout: 300
+  - repoURL: https://github.com/tobiasfuhge/data-engineering.git
+    targetRevision: main
+    ref: values
+    
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: python-ide
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

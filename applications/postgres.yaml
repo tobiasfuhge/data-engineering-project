@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: registry-1.docker.io/cloudpirates
+    chart: postgres
+    targetRevision: 0.13.8
+    helm:
+      valueFiles:
+        - $values/helm-values/postgres-values.yaml
+  - repoURL: https://github.com/tobiasfuhge/data-engineering.git
+    targetRevision: main
+    ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: data-storage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

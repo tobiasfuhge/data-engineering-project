@@ -1,0 +1,57 @@
+backendStore:
+  databaseMigration: true
+  databaseConnectionCheck: true
+
+  postgres:
+    enabled: true
+    host: "postgres.data-storage.svc.cluster.local"
+    port: 5432
+    database: "ds_db"
+
+  existingDatabaseSecret:
+    name: postgres-admin
+    usernameKey: postgres-user
+    passwordKey: postgres-password
+
+artifactRoot:
+  s3:
+    enabled: true
+    bucket: "mlflow"
+    existingSecret:
+      name: "minio"
+      keyOfAccessKeyId: "root-user"
+      keyOfSecretAccessKey: "root-password"
+
+
+extraEnvVars:
+  MLFLOW_S3_ENDPOINT_URL: "http://minio.data-storage.svc.cluster.local:9000"
+  MLFLOW_S3_IGNORE_TLS: "true"   
+  MLFLOW_SERVER_ALLOWED_HOSTS: "*"
+  MLFLOW_SERVER_CORS_ALLOWED_ORIGINS: "*"
+
+service:
+  type: ClusterIP
+  port: 5000
+  
+ingress:
+  enabled: true
+  annotations: 
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  hosts: 
+    - host: mlflow.student-yzpc.dski23a.timebertt.dev
+      paths:
+        - path: /
+          pathType: ImplementationSpecific   
+  tls: 
+    - hosts:
+        - mlflow.student-yzpc.dski23a.timebertt.dev
+      secretName: mlflow-tls
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "1Gi"
+  requests:
+    cpu: "250m"

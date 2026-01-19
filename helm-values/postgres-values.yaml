@@ -1,0 +1,15 @@
+auth:
+  existingSecret: postgres-admin
+  database: ds_db
+  username: mlops
+  secretKeys:
+    userPasswordKey: postgres-password
+
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClass: "local-path"
+
+service:
+  type: ClusterIP
+  port: 5432
