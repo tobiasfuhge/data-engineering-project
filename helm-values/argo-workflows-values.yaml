@@ -26,29 +26,29 @@ server:
     type: ClusterIP
     port: 2746
 
-  # ingress:
-  #   # -- Enable an ingress resource
-  #   enabled: true
-  #   # -- Additional ingress annotations
-  #   annotations: 
-  #     cert-manager.io/cluster-issuer: letsencrypt-prod
-  #     kubernetes.io/backend-protocol: "HTTP"
-  #     kubernetes.io/use-forwarded-headers: "true"
-  #     kubernetes.io/proxy-read-timeout: "3600"
-  #     kubernetes.io/proxy-send-timeout: "3600"
-  #     kubernetes.io/ssl-redirect: "true"
+  ingress:
+    # -- Enable an ingress resource
+    enabled: true
+    # -- Additional ingress annotations
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/backend-protocol: "HTTP"
+      kubernetes.io/use-forwarded-headers: "true"
+      kubernetes.io/proxy-read-timeout: "3600"
+      kubernetes.io/proxy-send-timeout: "3600"
+      kubernetes.io/ssl-redirect: "true"
 
 
-  #   # -- Defines which ingress controller will implement the resource
-  #   ingressClassName: "nginx"
+    # -- Defines which ingress controller will implement the resource
+    ingressClassName: "nginx"
 
-  #   hosts:
-  #     - argoworkflows.student-yzpc.dski23a.timebertt.dev
+    hosts:
+      - argoworkflows.group-jofz.dski23a.timebertt.dev
 
-  #   tls: 
-  #     - secretName: argoworkflows-tls
-  #       hosts:
-  #         - argoworkflows.student-yzpc.dski23a.timebertt.dev
+    tls: 
+      - secretName: argoworkflows-tls
+        hosts:
+          - argoworkflows.group-jofz.dski23a.timebertt.dev
         
 
 # -----------------------------

@@ -18,28 +18,28 @@ resources:
     memory: 512Mi
     cpu: 500m
 
-# ingress:
-#   enabled: true
-#   ingressClassName: "nginx"
-#   hosts:
-#     - minio.student-yzpc.dski23a.timebertt.dev
-#   tls:
-#     - secretName: minio-tls-cert
-#       hosts:
-#         - minio.student-yzpc.dski23a.timebertt.dev
+ingress:
+  enabled: true
+  ingressClassName: "nginx"
+  hosts:
+    - minio.group-jofz.dski23a.timebertt.dev
+  tls:
+    - secretName: minio-tls-cert
+      hosts:
+        - minio.group-jofz.dski23a.timebertt.dev
 
-# consoleIngress:
-#   enabled: true
-#   ingressClassName: "nginx"
-#   hosts:
-#     - console-minio.student-yzpc.dski23a.timebertt.dev
-#   annotations:
-#     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-#     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-#     nginx.ingress.kubernetes.io/proxy-body-size: "0"
-#   tls:
-#     - secretName: minio-console-tls-cert
-#       hosts:
-#         - console-minio.student-yzpc.dski23a.timebertt.dev
+consoleIngress:
+  enabled: true
+  ingressClassName: "nginx"
+  hosts:
+    - console-minio.group-jofz.dski23a.timebertt.dev
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  tls:
+    - secretName: minio-console-tls-cert
+      hosts:
+        - console-minio.group-jofz.dski23a.timebertt.dev
 
 buckets: []
