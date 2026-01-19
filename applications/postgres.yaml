@@ -12,7 +12,7 @@ spec:
     helm:
       valueFiles:
         - $values/helm-values/postgres-values.yaml
-  - repoURL: https://github.com/tobiasfuhge/data-engineering.git
+  - repoURL: https://github.com/tobiasfuhge/data-engineering-project.git
     targetRevision: main
     ref: values
 

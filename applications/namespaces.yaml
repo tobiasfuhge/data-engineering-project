@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/tobiasfuhge/data-engineering.git
+    repoURL: https://github.com/tobiasfuhge/data-engineering-project.git
     targetRevision: main
     path: namespaces
 

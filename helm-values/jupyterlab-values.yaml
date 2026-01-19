@@ -87,16 +87,16 @@ singleuser:
           name: postgres-admin
           key: postgres-password
 
-ingress:
-  enabled: true
-  annotations: 
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-  ingressClassName: nginx
-  hosts: 
-    - jupyterlab.student-yzpc.dski23a.timebertt.dev
-  tls: 
-    - hosts:
-        - jupyterlab.student-yzpc.dski23a.timebertt.dev
-      secretName: jupyterlab-tls
+# ingress:
+#   enabled: true
+#   annotations: 
+#     cert-manager.io/cluster-issuer: letsencrypt-prod
+#   ingressClassName: nginx
+#   hosts: 
+#     - jupyterlab.student-yzpc.dski23a.timebertt.dev
+#   tls: 
+#     - hosts:
+#         - jupyterlab.student-yzpc.dski23a.timebertt.dev
+#       secretName: jupyterlab-tls
 
   
