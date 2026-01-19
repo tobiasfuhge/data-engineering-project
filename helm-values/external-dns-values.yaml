@@ -1,0 +1,20 @@
+provider:
+  name: google
+extraArgs:
+- --google-project=timebertt-dhbw
+env:
+- name: GOOGLE_APPLICATION_CREDENTIALS
+  value: /etc/secrets/service-account/service-account.json
+extraVolumeMounts:
+- name: clouddns-credentials
+  mountPath: /etc/secrets/service-account
+  readOnly: true
+extraVolumes:
+- name: clouddns-credentials
+  secret:
+    secretName: google-clouddns-enc
+sources:
+- ingress
+- service
+registry: txt
+txtOwnerId: group-jofz
