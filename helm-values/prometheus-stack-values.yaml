@@ -1,0 +1,41 @@
+grafana:
+  useStatefulSet: true
+  persistence:
+    enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+
+    hosts:
+    - grafana.group-jofz.dski23a.timebertt.dev
+    tls:
+    - secretName: grafana-tls
+      hosts:
+      - grafana.group-jofz.dski23a.timebertt.dev
+
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              storage: 20Gi
+    retentionSize: 20GiB
+      
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+
+    hosts:
+    - prometheus.group-jofz.dski23a.timebertt.dev
+    tls:
+    - secretName: prometheus-tls
+      hosts:
+      - prometheus.group-jofz.dski23a.timebertt.dev
+
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
