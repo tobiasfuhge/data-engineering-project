@@ -7,7 +7,7 @@ hub:
     JupyterHub:
       authenticator_class: "dummy"
 
-extraConfig:
+  extraConfig:
     auth-settings: |
       import os
       
@@ -23,7 +23,7 @@ extraConfig:
           c.Authenticator.allowed_users = {username}
           # Optional: Den User auch gleich zum Admin machen
           c.Authenticator.admin_users = {username}
-          
+  
   extraEnv:
     DUMMY_USERNAME:
       valueFrom:
