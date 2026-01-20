@@ -11,6 +11,18 @@ hub:
       password: "{DUMMY_PASSWORD}"
       allowed_users:
         - "{DUMMY_USERNAME}"
+  
+  extraEnv:
+    DUMMY_USERNAME:
+      valueFrom:
+        secretKeyRef:
+          name: jupyterlabs-admin
+          key: username
+    DUMMY_PASSWORD:
+      valueFrom:
+        secretKeyRef:
+          name: jupyterlabs-admin
+          key: password
 
 # change to NodePort, if not using ingress or port-forwarding
 proxy:
@@ -88,17 +100,6 @@ singleuser:
         secretKeyRef:
           name: postgres-admin
           key: postgres-password
-
-    DUMMY_USERNAME:
-      valueFrom:
-        secretKeyRef:
-          name: jupyterlabs-admin
-          key: username
-    DUMMY_PASSWORD:
-      valueFrom:
-        secretKeyRef:
-          name: jupyterlabs-admin
-          key: password
 
 ingress:
   enabled: true
