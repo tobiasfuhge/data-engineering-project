@@ -6,11 +6,11 @@ hub:
     type: sqlite-pvc
   config:
     JupyterHub:
-      authenticator_class: "shared-password"
-    SharedPasswordAuthenticator:
-      user_password: "{DUMMY_PASSWORD}"
+      authenticator_class: dummy
+    DummyAuthenticator:
+      password: "{DUMMY_PASSWORD}"    # wird aus Env ersetzt
       allowed_users:
-        - "{DUMMY_USERNAME}"
+        - "{DUMMY_USERNAME}"     
   
   extraEnv:
     DUMMY_USERNAME:
