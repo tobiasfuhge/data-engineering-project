@@ -6,9 +6,11 @@ hub:
     type: sqlite-pvc
   config:
     JupyterHub:
-      authenticator_class: "dummy"
+      authenticator_class: dummy
     DummyAuthenticator:
-      password: ""
+      password: "{DUMMY_PASSWORD}"
+      allowed_users:
+        - "{DUMMY_USERNAME}"
 
 # change to NodePort, if not using ingress or port-forwarding
 proxy:
@@ -86,6 +88,17 @@ singleuser:
         secretKeyRef:
           name: postgres-admin
           key: postgres-password
+
+    DUMMY_USERNAME:
+      valueFrom:
+        secretKeyRef:
+          name: jupyterlabs-admin
+          key: username
+    DUMMY_PASSWORD:
+      valueFrom:
+        secretKeyRef:
+          name: jupyterlabs-admin
+          key: password
 
 ingress:
   enabled: true
