@@ -6,9 +6,9 @@ hub:
     type: sqlite-pvc
   config:
     JupyterHub:
-      authenticator_class: dummy
-    DummyAuthenticator:
-      password: "{DUMMY_PASSWORD}"
+      authenticator_class: sharedpassword
+    SharedPasswordAuthenticator:
+      user_password: "{DUMMY_PASSWORD}"
       allowed_users:
         - "{DUMMY_USERNAME}"
   
