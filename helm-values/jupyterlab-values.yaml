@@ -6,8 +6,12 @@ hub:
   config:
     JupyterHub:
       authenticator_class: "dummy"
-    DummyAuthenticator:
-      password: ${DUMMY_PASSWORD}
+
+  extraConfig:
+    auth-settings: |
+      import os
+      # Hier holen wir den Wert direkt aus der Umgebung des Pods
+      c.DummyAuthenticator.password = os.environ.get("DUMMY_PASSWORD")
   
   extraEnv:
     DUMMY_USERNAME:
