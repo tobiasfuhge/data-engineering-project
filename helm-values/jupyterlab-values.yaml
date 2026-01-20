@@ -1,16 +1,13 @@
 # JupyterHub Helm values for a single-user JupyterLab setup
 
 hub:
-  # Use default SQLite on PVC — no storageClass or resources here
   db:
     type: sqlite-pvc
   config:
     JupyterHub:
-      authenticator_class: dummy
+      authenticator_class: "dummy"
     DummyAuthenticator:
-      password: "{DUMMY_PASSWORD}"    # wird aus Env ersetzt
-      allowed_users:
-        - "{DUMMY_USERNAME}"     
+      password: ${DUMMY_PASSWORD}
   
   extraEnv:
     DUMMY_USERNAME:
