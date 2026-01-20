@@ -7,12 +7,23 @@ hub:
     JupyterHub:
       authenticator_class: "dummy"
 
-  extraConfig:
+extraConfig:
     auth-settings: |
       import os
-      # Hier holen wir den Wert direkt aus der Umgebung des Pods
-      c.DummyAuthenticator.password = os.environ.get("DUMMY_PASSWORD")
-  
+      
+      # Passwort setzen
+      password = os.environ.get("DUMMY_PASSWORD")
+      if password:
+          c.DummyAuthenticator.password = password
+      
+      # Usernamen restriktieren (nur dieser eine User darf rein)
+      username = os.environ.get("DUMMY_USERNAME")
+      if username:
+          # Wir fügen den User der Liste der erlaubten Personen hinzu
+          c.Authenticator.allowed_users = {username}
+          # Optional: Den User auch gleich zum Admin machen
+          c.Authenticator.admin_users = {username}
+          
   extraEnv:
     DUMMY_USERNAME:
       valueFrom:
