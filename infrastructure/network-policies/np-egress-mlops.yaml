@@ -6,8 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: jupyterhub
-      component: singleuser-server
+      app: mlflow
   policyTypes:
   - Egress
   egress:
