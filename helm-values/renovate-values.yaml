@@ -3,7 +3,7 @@ renovate:
     {
       "platform": "github",
       "token": "${GITHUB_TOKEN}",
-      "repositories": ["your-org/your-repo"]
+      "repositories": ["tobiasfuhge/data-engineering-project"]
     }
 
 extraEnv:
