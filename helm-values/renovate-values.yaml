@@ -6,7 +6,7 @@ renovate:
       "repositories": ["tobiasfuhge/data-engineering-project"]
     }
 
-extraEnv:
+env:
   - name: GITHUB_TOKEN
     valueFrom:
       secretKeyRef:
