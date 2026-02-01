@@ -1,5 +1,13 @@
-token:
-  existingSecret: renovate-git-token
-  secretKey: token
-repositories:
-  - tobiasfuhge/data-engineering-project
+renovate:
+  config:
+    platform: github
+    token: "${GITHUB_TOKEN}"
+    repositories:
+      - "tobiasfuhge/data-engineering-project"
+
+extraEnv:
+  - name: GITHUB_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: renovate-github-token
+        key: token
