@@ -1,10 +1,31 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended",
+    ":timezone(Europe/Berlin)"
   ],
   "dependencyDashboard": true,
-  "rebaseConflictedPrs": true,
-  "onboarding": false,
-  "prCreation": "immediate"
+  "labels": ["dependencies", "renovate"],
+  "rangeStrategy": "update-lockfile",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major updates",
+      "automerge": false
+    }
+  ],
+  "kubernetes": {
+    "fileMatch": [
+      "^applications/.+\\.yaml$",
+      "^infrastructure/.+\\.yaml$",
+      "^namespaces/.+\\.yaml$",
+      "^helm-values/.+\\.yaml$"
+    ]
+  },
+  "helm-values": {
+    "fileMatch": ["^helm-values/.+\\.yaml$"]
+  },
+  "argocd": {
+    "fileMatch": ["^applications/.+\\.yaml$"]
+  }
 }
