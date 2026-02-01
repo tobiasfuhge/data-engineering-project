@@ -22,14 +22,18 @@ spec:
     namespace: python-ide
 
   ignoreDifferences:
-  - group: ""
-    kind: Secret
-    name: python-ide-hub
+  - group: apps
+    kind: Deployment
+    name: hub
     jsonPointers:
-    - /data/hub.config.ConfigurableHTTPProxy.auth_token
-    - /data/hub.config.CryptKeeper.keys
-    - /data/hub.config.JupyterHub.cookie_secret
-
+    - /spec/template/metadata/annotations/checksum~1secret
+    - /spec/template/metadata/annotations/checksum~1config-map
+  - group: apps
+    kind: Deployment
+    name: proxy
+    jsonPointers:
+    - /spec/template/metadata/annotations/checksum~1auth-token
+    
   syncPolicy:
     automated:
       prune: true
