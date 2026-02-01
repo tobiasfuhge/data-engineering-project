@@ -8,7 +8,7 @@ spec:
   sources:
   - repoURL: registry-1.docker.io/cloudpirates
     chart: postgres
-    targetRevision: 0.13.8
+    targetRevision: 0.15.0
     helm:
       valueFiles:
         - $values/helm-values/postgres-values.yaml
