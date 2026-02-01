@@ -21,6 +21,15 @@ spec:
     server: https://kubernetes.default.svc
     namespace: python-ide
 
+  ignoreDifferences:
+  - group: ""
+    kind: Secret
+    name: python-ide-hub
+    jsonPointers:
+    - /data/hub.config.ConfigurableHTTPProxy.auth_token
+    - /data/hub.config.CryptKeeper.keys
+    - /data/hub.config.JupyterHub.cookie_secret
+
   syncPolicy:
     automated:
       prune: true
