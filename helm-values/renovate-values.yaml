@@ -2,10 +2,10 @@ renovate:
   config: |
     {
       "platform": "github",
-      "token": "{{ .Env.GITHUB_TOKEN }}",
+      "token": "${GITHUB_TOKEN}",
       "repositories": ["tobiasfuhge/data-engineering-project"]
     }
-  configEnableHelmTpl: true
+  configIsSecret: true
 
 envList:
   - name: GITHUB_TOKEN
