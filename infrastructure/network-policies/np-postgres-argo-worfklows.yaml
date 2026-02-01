@@ -11,7 +11,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: argo-workflows
+          kubernetes.io/metadata.name: argo-workflows
     ports:
     - protocol: TCP
       port: 5432
