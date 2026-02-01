@@ -1,9 +1,10 @@
 renovate:
-  config:
-    platform: github
-    token: "${GITHUB_TOKEN}"
-    repositories:
-      - "tobiasfuhge/data-engineering-project"
+  config: |
+    {
+      "platform": "github",
+      "token": "${GITHUB_TOKEN}",
+      "repositories": ["your-org/your-repo"]
+    }
 
 extraEnv:
   - name: GITHUB_TOKEN
