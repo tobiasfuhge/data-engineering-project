@@ -10,17 +10,15 @@ spec:
   policyTypes:
   - Egress
   egress:
-  # Zugriff auf MinIO + Postgres
   - to:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: data-storage
     ports:
     - protocol: TCP
-      port: 9000   # MinIO
+      port: 9000
     - protocol: TCP
-      port: 5432   # Postgres
-  # Zugriff auf DNS (CoreDNS)
+      port: 5432
   - to:
     - namespaceSelector:
         matchLabels:
