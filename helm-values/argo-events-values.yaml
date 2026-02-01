@@ -1,0 +1,23 @@
+fullnameOverride: argo-events
+
+crds:
+  install: true
+  keep: true
+
+controller:
+  name: controller-manager
+  replicas: 1
+  image:
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  logFormat: text
+
+webhook:
+  enabled: true
+  name: webhook-server
