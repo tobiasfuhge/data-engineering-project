@@ -1,11 +1,15 @@
 # JupyterHub Helm values for a single-user JupyterLab setup
 
 hub:
+  existingSecret: "jupyterhub-manual-secrets"
   db:
     type: sqlite-pvc
   config:
+    ConfigurableHTTPProxy:
+      auth_token: ""
     JupyterHub:
       authenticator_class: "dummy"
+      cookie_secret: ""
 
   extraConfig:
     auth-settings: |
