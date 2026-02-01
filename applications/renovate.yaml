@@ -7,8 +7,7 @@ spec:
   project: default
 
   sources:
-  - repoURL: https://charts.renovatebot.com
-    chart: renovate
+  - repoURL: oci://ghcr.io/renovatebot/charts/renovate
     targetRevision: 46.0.0
     helm:
       valueFiles:
