@@ -33,7 +33,15 @@ spec:
     name: proxy
     jsonPointers:
     - /spec/template/metadata/annotations/checksum~1auth-token
-    
+  - group: ""
+    kind: Secret
+    name: hub
+    namespace: python-ide
+    jsonPointers:
+      - /data/hub.config.ConfigurableHTTPProxy.auth_token
+      - /data/hub.config.CryptKeeper.keys
+      - /data/hub.config.JupyterHub.cookie_secret
+
   syncPolicy:
     automated:
       prune: true
