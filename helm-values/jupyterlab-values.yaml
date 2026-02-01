@@ -1,11 +1,19 @@
 # JupyterHub Helm values for a single-user JupyterLab setup
 
 hub:
+  cookieSecret: b7ab6620f69c90d9a20c1757ef6c68cf4207512f65255177b4d1d894afd7c9e5
+
   db:
     type: sqlite-pvc
   config:
     JupyterHub:
       authenticator_class: "dummy"
+      cookie_secret: b7ab6620f69c90d9a20c1757ef6c68cf4207512f65255177b4d1d894afd7c9e5
+    ConfigurableHTTPProxy:
+      auth_token: a3cb8a07825703f05850e06aa3879a7ed46c50bbdb265d3b863fff3c3c0cb042
+    CryptKeeper:
+      keys: 
+        - faac676fa4146699080d3e0a4c015c560c979581e36bd4848fc8028eaa2e7a9f
 
   extraConfig:
     auth-settings: |
