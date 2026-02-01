@@ -1,0 +1,5 @@
+token:
+  existingSecret: renovate-git-token
+  secretKey: token
+repositories:
+  - tobiasfuhge/data-engineering-project
