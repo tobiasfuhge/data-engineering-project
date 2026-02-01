@@ -10,5 +10,5 @@ extraEnv:
   - name: GITHUB_TOKEN
     valueFrom:
       secretKeyRef:
-        name: renovate-github-token
+        name: renovate-git-token
         key: token
