@@ -8,6 +8,7 @@ spec:
 
   sources:
   - repoURL: oci://ghcr.io/renovatebot/charts/renovate
+    path: .
     targetRevision: 46.0.0
     helm:
       valueFiles:
