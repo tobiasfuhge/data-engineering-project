@@ -42,11 +42,6 @@ env:
   - name: AIRFLOW__API_AUTH__JWT_SECRET
     value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
 
-apiServer:
-  enabled: true
-  service:
-    type: ClusterIP
-
 ingress:
   enabled: true
   apiServer:
