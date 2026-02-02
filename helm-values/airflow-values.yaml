@@ -7,15 +7,14 @@ executor: "LocalExecutor"
 postgresql:
   enabled: false
 
-# Externe Airflow-Metadatenbank (statt postgresql.enabled)
-externalDatabase:
-  type: postgresql
-  host: postgres.data-storage.svc.cluster.local
-  port: 5432
-  database: ds_db
-  user: mlops
-  password: qwklfqkwjd
-  sslmode: disable
+data:
+  metadataConnection:
+    protocol: postgresql
+    host: postgres.data-storage.svc.cluster.local
+    port: 5432
+    db: ds_db
+    user: mlops
+    pass: qwklfqkwjd
 
 redis:
   enabled: false
