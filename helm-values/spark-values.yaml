@@ -1,8 +1,11 @@
+## Globaler Image-Block: Stabil & Erreichbar
 image:
-  repository: bitnami/spark
-  tag: 3.5.0
+  registry: docker.io
+  repository: bitnamilegacy/spark
+  tag: 4.0.0-debian-12-r20
   pullPolicy: IfNotPresent
 
+## Master Konfiguration
 master:
   enabled: true
   resources:
@@ -19,6 +22,7 @@ master:
     runAsUser: 1001
     runAsNonRoot: true
 
+## Worker Konfiguration (3 Replikate für ordentlich Power)
 worker:
   enabled: true
   replicaCount: 3
@@ -36,15 +40,27 @@ worker:
     runAsUser: 1001
     runAsNonRoot: true
 
+## Service-Einstellungen für interne Kommunikation & UI
 service:
   type: ClusterIP
   ports:
-    cluster: 7077
+    master: 7077
     rest: 6066
+    web: 8080
 
+## Prometheus Monitoring Integration (Cross-Namespace)
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    # Hier wird das Objekt im Namespace des Prometheus-Stacks erstellt,
+    # damit der Operator es sofort findet.
+    namespace: prometheus-stack
+    interval: 30s
+    # Das Label 'release' ist der Standard-Selector des Prometheus-Stacks
+    labels:
+      release: prometheus-stack
+
+## RBAC & ServiceAccount (Pflicht für Spark auf K8s)
 serviceAccount:
   create: true
-
-
-metrics:
-  enabled: false 
