@@ -55,9 +55,6 @@ webserver:
   webserverConfig: |
     CSRF_ENABLED = True
 
-# Airflow 3 API-Server aktiv lassen (optional)
-apiServer:
-  enabled: true
 
 # Jobs ohne Helm-Hooks (ArgoCD-kompatibel)
 createUserJob:
