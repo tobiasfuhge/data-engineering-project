@@ -1,4 +1,8 @@
 ## Globaler Image-Block: Stabil & Erreichbar
+
+global:
+  security:
+    allowInsecureImages: true
 image:
   registry: docker.io
   repository: bitnamilegacy/spark
