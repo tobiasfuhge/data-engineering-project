@@ -8,28 +8,28 @@ airflow:
     type: ClusterIP
     port: 8080
 
-  # Alles, was externe Komponenten starten würde, deaktivieren
-  redis:
-    enabled: false
-
+  # Disable all external dependencies
   postgresql:
     enabled: false
-
-  flower:
+  redis:
     enabled: false
-
-  scheduler:
-    enabled: true
-
   workers:
     enabled: false
 
+  # Minimal components
+  scheduler:
+    enabled: true
+  dagProcessor:
+    enabled: true
   triggerer:
     enabled: true
 
-  dagProcessor:
-    enabled: true
+  # Logs only in pod
+  logs:
+    persistence:
+      enabled: false
 
+  # Ingress + TLS
   ingress:
     enabled: true
     ingressClassName: "nginx"
@@ -42,7 +42,7 @@ airflow:
       kubernetes.io/ssl-redirect: "true"
 
     hosts:
-      - host: "argoworkflows.group-jofz.dski23a.timebertt.dev"
+      - host: "airflow.group-jofz.dski23a.timebertt.dev"
         paths:
           - path: /
             pathType: ImplementationSpecific
@@ -50,4 +50,4 @@ airflow:
     tls:
       - secretName: "argoworkflows-tls"
         hosts:
-          - "argoworkflows.group-jofz.dski23a.timebertt.dev"
+          - "airflow.group-jofz.dski23a.timebertt.dev"
