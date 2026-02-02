@@ -7,15 +7,15 @@ executor: "LocalExecutor"
 postgresql:
   enabled: false
 
-data:
-  metadataConnection:
-    user: mlops
-    pass: qwklfqkwjd
-    protocol: postgresql
-    host: postgres.data-storage.svc.cluster.local
-    port: 5432
-    db: ds_db
-    sslmode: disable
+# Externe Airflow-Metadatenbank (statt postgresql.enabled)
+externalDatabase:
+  type: postgresql
+  host: postgres.data-storage.svc.cluster.local
+  port: 5432
+  database: ds_db
+  user: mlops
+  password: qwklfqkwjd
+  sslmode: disable
 
 redis:
   enabled: false
@@ -51,16 +51,19 @@ ingress:
   enabled: true
   web:
     enabled: true
+    ingressClassName: nginx
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingressClassName: nginx
-    path: /
-    pathType: ImplementationSpecific
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
-      - name: airflow.group-jofz.dski23a.timebertt.dev
-        tls:
-          enabled: true
-          secretName: airflow-tls
+      - host: airflow.group-jofz.dski23a.timebertt.dev
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - hosts:
+          - airflow.group-jofz.dski23a.timebertt.dev
+        secretName: airflow-tls
 
 createUserJob:
   useHelmHooks: false
@@ -72,7 +75,7 @@ migrateDatabaseJob:
 
 config:
   core:
-    load_examples: 'True'
+    load_examples: "True"
 
 workers:
   persistence:
