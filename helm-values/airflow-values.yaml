@@ -47,12 +47,8 @@ webserver:
   service:
     type: ClusterIP
 
-apiServer:
-  enabled: true
-
 ingress:
-  enabled: null
-  apiServer:
+  web:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -64,8 +60,6 @@ ingress:
         tls:
           enabled: true
           secretName: airflow-tls
-  web:
-    enabled: false
 
 createUserJob:
   useHelmHooks: false
