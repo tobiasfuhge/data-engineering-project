@@ -42,28 +42,26 @@ env:
   - name: AIRFLOW__API_AUTH__JWT_SECRET
     value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
 
-webserver:
+apiServer:
   enabled: true
   service:
     type: ClusterIP
 
 ingress:
   enabled: true
-  web:
+  apiServer:
     enabled: true
     ingressClassName: nginx
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
-      - host: airflow.group-jofz.dski23a.timebertt.dev
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-    tls:
-      - hosts:
-          - airflow.group-jofz.dski23a.timebertt.dev
-        secretName: airflow-tls
+      - name: airflow.group-jofz.dski23a.timebertt.dev
+        tls:
+          enabled: true
+          secretName: airflow-tls
+    path: "/"
+    pathType: "ImplementationSpecific"
 
 createUserJob:
   useHelmHooks: false
