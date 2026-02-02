@@ -1,3 +1,11 @@
+defaultAirflowRepository: apache/airflow
+defaultAirflowTag: "3.1.6"
+airflowVersion: "3.1.6"
+
+# Einfacher Betrieb ohne Celery/Redis
+executor: "LocalExecutor"
+
+# Externe Postgres-DB verwenden
 postgresql:
   enabled: false
 
@@ -9,13 +17,67 @@ data:
     host: postgres.data-storage.svc.cluster.local
     port: 5432
     db: ds_db
+    sslmode: disable
 
+# Redis komplett deaktivieren (nicht benötigt mit LocalExecutor)
+redis:
+  enabled: false
+
+# StatsD deaktivieren (weniger Komponenten)
+statsd:
+  enabled: false
+
+# Diese automatischen Secret-Env-Variablen deaktivieren,
+# damit keine Secret-Objekte (via Hooks) erwartet werden.
+enableBuiltInSecretEnvVars:
+  AIRFLOW__CORE__FERNET_KEY: false
+  AIRFLOW__WEBSERVER__SECRET_KEY: false
+  AIRFLOW__API__SECRET_KEY: false
+  AIRFLOW__API_AUTH__JWT_SECRET: false
+  AIRFLOW__CELERY__CELERY_RESULT_BACKEND: false
+  AIRFLOW__CELERY__RESULT_BACKEND: false
+  AIRFLOW__CELERY__BROKER_URL: false
+
+# Benötigte Keys direkt per Env setzen
+env:
+  - name: AIRFLOW__CORE__FERNET_KEY
+    value: WW3Sj9-DRlmtlTzXjx5ADbaYQvlZb6QDuwJXpVTEqE8=
+  - name: AIRFLOW__WEBSERVER__SECRET_KEY
+    value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
+  - name: AIRFLOW__API__SECRET_KEY
+    value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
+  - name: AIRFLOW__API_AUTH__JWT_SECRET
+    value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
+
+# Minimale webserver_config, erzeugt die benötigte ConfigMap
+webserver:
+  enabled: true
+  webserverConfig: |
+    CSRF_ENABLED = True
+
+# Airflow 3 API-Server aktiv lassen (optional)
+apiServer:
+  enabled: true
+
+# Jobs ohne Helm-Hooks (ArgoCD-kompatibel)
 createUserJob:
   useHelmHooks: false
   applyCustomEnv: false
+
 migrateDatabaseJob:
   useHelmHooks: false
   applyCustomEnv: false
 
-fernetKey: ""
-webserverSecretKey: ""
+# Option: Beispiel-DAGs laden, damit das UI nicht leer ist
+config:
+  core:
+    load_examples: 'True'
+
+# Optional: keine PVCs für einen schnellen, einfachen Start (Logs bleiben im Pod)
+workers:
+  persistence:
+    enabled: false
+
+triggerer:
+  persistence:
+    enabled: false
