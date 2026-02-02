@@ -63,10 +63,9 @@ ingress:
     ingressClassName: nginx
     hosts: 
       - airflow.group-jofz.dski23a.timebertt.dev
-    tls: 
-      - hosts:
-          - airflow.group-jofz.dski23a.timebertt.dev
-        secretName: airflow-tls
+    tls:
+      enabled: true
+      secretName: airflow-tls
 
 
 
