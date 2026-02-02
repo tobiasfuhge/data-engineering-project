@@ -8,13 +8,7 @@ postgresql:
   enabled: false
 
 data:
-  metadataConnection:
-    protocol: postgresql
-    host: postgres.data-storage.svc.cluster.local
-    port: 5432
-    db: ds_db
-    user: mlops
-    pass: qwklfqkwjd
+  metadataSecretName: airflow-db-secret
 
 redis:
   enabled: false
