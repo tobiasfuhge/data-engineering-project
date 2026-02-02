@@ -1,12 +1,11 @@
-executor: KubernetesExecutor
-
-dags:
-  persistence:
-    enabled: false
-
-workers:
-  replicas: 2
-
-webserver:
-  service:
-    type: LoadBalancer
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - airflow.group-jofz.dski23a.timebertt.dev
+  tls:
+    - hosts:
+        - airflow.group-jofz.dski23a.timebertt.dev
+      secretName: airflow-tls

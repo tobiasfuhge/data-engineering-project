@@ -7,9 +7,9 @@ spec:
   project: default
 
   sources:
-  - repoURL: https://airflow.apache.org/
+  - repoURL: https://helm.astronomer.io
     chart: airflow
-    targetRevision: 1.18.0
+    targetRevision: v1.17.19
     helm:
       valueFiles:
         - $values/helm-values/airflow-values.yaml
