@@ -1,53 +1,12 @@
-# airflow-values.yaml
-airflow:
-  config:
-    AIRFLOW__CORE__EXECUTOR: "KubernetesExecutor"
-    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+executor: KubernetesExecutor
 
+dags:
+  persistence:
+    enabled: false
+
+workers:
+  replicas: 2
+
+webserver:
   service:
-    type: ClusterIP
-    port: 8080
-
-  # Disable all external dependencies
-  postgresql:
-    enabled: false
-  redis:
-    enabled: false
-  workers:
-    enabled: false
-
-  # Minimal components
-  scheduler:
-    enabled: true
-  dagProcessor:
-    enabled: true
-  triggerer:
-    enabled: true
-
-  # Logs only in pod
-  logs:
-    persistence:
-      enabled: false
-
-  # Ingress + TLS
-  ingress:
-    enabled: true
-    ingressClassName: "nginx"
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-      kubernetes.io/backend-protocol: "HTTP"
-      kubernetes.io/use-forwarded-headers: "true"
-      kubernetes.io/proxy-read-timeout: "3600"
-      kubernetes.io/proxy-send-timeout: "3600"
-      kubernetes.io/ssl-redirect: "true"
-
-    hosts:
-      - host: "airflow.group-jofz.dski23a.timebertt.dev"
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-
-    tls:
-      - secretName: "argoworkflows-tls"
-        hosts:
-          - "airflow.group-jofz.dski23a.timebertt.dev"
+    type: LoadBalancer
