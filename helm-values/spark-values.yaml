@@ -1,5 +1,3 @@
-## Globaler Image-Block: Stabil & Erreichbar
-
 global:
   security:
     allowInsecureImages: true
@@ -9,7 +7,6 @@ image:
   tag: 4.0.0-debian-12-r20
   pullPolicy: IfNotPresent
 
-## Master Konfiguration
 master:
   enabled: true
   resources:
@@ -26,7 +23,6 @@ master:
     runAsUser: 1001
     runAsNonRoot: true
 
-## Worker Konfiguration (3 Replikate für ordentlich Power)
 worker:
   enabled: true
   replicaCount: 3
@@ -44,7 +40,6 @@ worker:
     runAsUser: 1001
     runAsNonRoot: true
 
-## Service-Einstellungen für interne Kommunikation & UI
 service:
   type: ClusterIP
   ports:
@@ -52,19 +47,14 @@ service:
     rest: 6066
     web: 8080
 
-## Prometheus Monitoring Integration (Cross-Namespace)
 metrics:
   enabled: true
   serviceMonitor:
     enabled: true
-    # Hier wird das Objekt im Namespace des Prometheus-Stacks erstellt,
-    # damit der Operator es sofort findet.
     namespace: prometheus-stack
     interval: 30s
-    # Das Label 'release' ist der Standard-Selector des Prometheus-Stacks
     labels:
       release: prometheus-stack
 
-## RBAC & ServiceAccount (Pflicht für Spark auf K8s)
 serviceAccount:
   create: true
