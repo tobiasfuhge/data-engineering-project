@@ -1,0 +1,37 @@
+image:
+  repository: bitnami/spark
+  tag: 3.5.0
+  pullPolicy: IfNotPresent
+
+master:
+  enabled: true
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+  resourcesPreset: small
+
+worker:
+  enabled: true
+  replicaCount: 2
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+  resourcesPreset: small
+
+service:
+  type: ClusterIP
+  ports:
+    cluster: 7077
+
+serviceAccount:
+  create: true
