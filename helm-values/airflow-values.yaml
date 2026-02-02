@@ -51,19 +51,23 @@ env:
 
 # Minimale webserver_config, erzeugt die benötigte ConfigMap
 webserver:
-  enabled: true
-  replicas: 1
-  webserverConfig: |
-    CSRF_ENABLED = True
-
-  # Service für den Webserver: NodePort, damit von außen erreichbar
   service:
-    type: NodePort
-    ports:
-      - name: airflow-ui
-        port: 8080       # interne Cluster-IP
-        targetPort: 8080 # Container-Port
-        nodePort: 30080  # Externer Port auf dem Node
+    type: LoadBalancer
+
+ingress:
+  web:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/ingress.class: nginx
+    ingressClassName: nginx
+    hosts: 
+      - airflow.group-jofz.dski23a.timebertt.dev
+    tls: 
+      - hosts:
+          - airflow.group-jofz.dski23a.timebertt.dev
+        secretName: airflow-tls
+
 
 
 # Jobs ohne Helm-Hooks (ArgoCD-kompatibel)
