@@ -55,17 +55,20 @@ webserver:
     type: LoadBalancer
 
 ingress:
+  enabled: true    # global, muss gesetzt sein
   web:
     enabled: true
-    annotations: 
-      cert-manager.io/cluster-issuer: letsencrypt-prod
+    annotations:
       kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     ingressClassName: nginx
-    hosts: 
+    hosts:
       - airflow.group-jofz.dski23a.timebertt.dev
     tls:
       enabled: true
       secretName: airflow-tls
+    path: /
+    pathType: ImplementationSpecific
 
 
 
