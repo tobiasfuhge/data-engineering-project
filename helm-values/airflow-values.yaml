@@ -55,7 +55,7 @@ webserver:
     type: LoadBalancer
 
 ingress:
-  enabled: true    # global, muss gesetzt sein
+  enabled: true
   web:
     enabled: true
     annotations:
@@ -67,9 +67,10 @@ ingress:
     path: /
     pathType: ImplementationSpecific
     tls:
-      - hosts:
-          - airflow.group-jofz.dski23a.timebertt.dev
-        secretName: airflow-tls
+      enabled: true
+      secretName: airflow-tls
+      hosts:
+        - airflow.group-jofz.dski23a.timebertt.dev
 
 
 
