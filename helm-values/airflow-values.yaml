@@ -58,15 +58,18 @@ ingress:
   enabled: true
   web:
     enabled: true
-    host: airflow.group-jofz.dski23a.timebertt.dev
-    path: /
-    ingressClassName: nginx
     annotations:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    tls:
-      enabled: true
-      secretName: airflow-tls
+    ingressClassName: nginx
+    hosts:
+      - name: airflow.group-jofz.dski23a.timebertt.dev
+        # TLS pro Host definieren
+        tls:
+          - secretName: airflow-tls
+    path: /
+    pathType: ImplementationSpecific
+
 
 
 # Jobs ohne Helm-Hooks (ArgoCD-kompatibel)
