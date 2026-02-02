@@ -2,10 +2,8 @@ defaultAirflowRepository: apache/airflow
 defaultAirflowTag: "3.1.6"
 airflowVersion: "3.1.6"
 
-# Einfacher Betrieb ohne Celery/Redis
 executor: "LocalExecutor"
 
-# Externe Postgres-DB verwenden
 postgresql:
   enabled: false
 
@@ -19,16 +17,12 @@ data:
     db: ds_db
     sslmode: disable
 
-# Redis komplett deaktivieren (nicht benötigt mit LocalExecutor)
 redis:
   enabled: false
 
-# StatsD deaktivieren (weniger Komponenten)
 statsd:
   enabled: false
 
-# Diese automatischen Secret-Env-Variablen deaktivieren,
-# damit keine Secret-Objekte (via Hooks) erwartet werden.
 enableBuiltInSecretEnvVars:
   AIRFLOW__CORE__FERNET_KEY: false
   AIRFLOW__WEBSERVER__SECRET_KEY: false
@@ -38,7 +32,6 @@ enableBuiltInSecretEnvVars:
   AIRFLOW__CELERY__RESULT_BACKEND: false
   AIRFLOW__CELERY__BROKER_URL: false
 
-# Benötigte Keys direkt per Env setzen
 env:
   - name: AIRFLOW__CORE__FERNET_KEY
     value: WW3Sj9-DRlmtlTzXjx5ADbaYQvlZb6QDuwJXpVTEqE8=
@@ -49,31 +42,31 @@ env:
   - name: AIRFLOW__API_AUTH__JWT_SECRET
     value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
 
-# Minimale webserver_config, erzeugt die benötigte ConfigMap
-
 webserver:
+  enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
+
+apiServer:
+  enabled: true
 
 ingress:
-  enabled: true
-  web:
+  enabled: null
+  apiServer:
     enabled: true
     annotations:
-      kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-prod
     ingressClassName: nginx
-    hosts:
-      - airflow.group-jofz.dski23a.timebertt.dev
     path: /
     pathType: ImplementationSpecific
-    tls:
-      secretName: airflow-tls
+    hosts:
+      - name: airflow.group-jofz.dski23a.timebertt.dev
+        tls:
+          enabled: true
+          secretName: airflow-tls
+  web:
+    enabled: false
 
-
-
-
-# Jobs ohne Helm-Hooks (ArgoCD-kompatibel)
 createUserJob:
   useHelmHooks: false
   applyCustomEnv: false
@@ -82,12 +75,10 @@ migrateDatabaseJob:
   useHelmHooks: false
   applyCustomEnv: false
 
-# Option: Beispiel-DAGs laden, damit das UI nicht leer ist
 config:
   core:
     load_examples: 'True'
 
-# Optional: keine PVCs für einen schnellen, einfachen Start (Logs bleiben im Pod)
 workers:
   persistence:
     enabled: false
