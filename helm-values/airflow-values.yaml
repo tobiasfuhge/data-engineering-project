@@ -50,6 +50,7 @@ env:
     value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
 
 # Minimale webserver_config, erzeugt die benötigte ConfigMap
+
 webserver:
   service:
     type: LoadBalancer
@@ -63,12 +64,12 @@ ingress:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     ingressClassName: nginx
     hosts:
-      - name: airflow.group-jofz.dski23a.timebertt.dev
-        # TLS pro Host definieren
-        tls:
-          - secretName: airflow-tls
+      - airflow.group-jofz.dski23a.timebertt.dev
     path: /
     pathType: ImplementationSpecific
+    tls:
+      secretName: airflow-tls
+
 
 
 
