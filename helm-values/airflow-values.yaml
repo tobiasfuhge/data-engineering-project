@@ -16,3 +16,6 @@ createUserJob:
 migrateDatabaseJob:
   useHelmHooks: false
   applyCustomEnv: false
+
+fernetKey: ""
+webserverSecretKey: ""
