@@ -1,0 +1,102 @@
+###########################################
+## Pgbouncer SSL Pre install/update Hook ##
+###########################################
+{{- if (and .Values.airflow.pgbouncer.enabled (eq .Values.airflow.pgbouncer.sslmode "require")) }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "-2"
+  name: {{ .Release.Name }}-create-secret-role
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list", "create", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "-2"
+  name: {{ .Release.Name }}-create-secret-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-pgbouncer-ssl
+  namespace: "{{ .Release.Namespace }}"
+roleRef:
+  kind: Role
+  name: {{ .Release.Name }}-create-secret-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "3"
+  labels:
+    tier: airflow
+    component: pgbouncer
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name:  {{ .Release.Name }}-pgbouncer-ssl
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-pgbouncerssl-job
+  labels:
+    tier: airflow
+    component: pgbouncer
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    {{- with .Values.airflow.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook-weight": "5"
+spec:
+  template:
+    metadata:
+      annotations: {{- toYaml .Values.certgenerator.extraAnnotations | nindent 8 }}
+      labels:
+        tier: airflow
+        component: pgbouncer
+        release: {{ .Release.Name }}
+        {{- with .Values.airflow.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      affinity: {{- toYaml .Values.certgenerator.affinity | nindent 10 }}
+      {{- if or .Values.airflow.registry.secretName .Values.airflow.registry.connection }}
+      imagePullSecrets:
+        - name: {{ template "astro.registry_secret" . }}
+      {{- end }}
+      restartPolicy: Never
+      serviceAccountName: {{ .Release.Name }}-pgbouncer-ssl
+      containers:
+        - name: pgbouncer-certgenerator
+          image: "{{ .Values.astronomer.images.certgenerator.repository }}:{{ .Values.astronomer.images.certgenerator.tag}}"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          args: [
+            "--hostname={{ .Release.Name }}-pgbouncer.{{ .Release.Name }}.svc.cluster.local",
+            "--secret-name={{ .Release.Name }}-pgbouncer-client-certificates",
+            "--namespace={{ .Release.Namespace }}",
+            "--in-cluster=True"
+          ]
+      volumes:
+        - name: tmp
+          emptyDir: {}
+{{ end }}

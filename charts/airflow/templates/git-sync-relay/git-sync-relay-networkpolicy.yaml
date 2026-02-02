@@ -1,0 +1,79 @@
+##################################
+## git-sync-relay NetworkPolicy ##
+##################################
+{{- if and .Values.airflow.networkPolicies.enabled .Values.gitSyncRelay.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-git-sync-relay
+  labels:
+    component: git-sync-relay
+    tier: airflow
+    release: {{ .Release.Name }}
+    chart: {{ .Release.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+spec:
+  podSelector:
+    matchLabels:
+      tier: airflow
+      component: git-sync-relay
+      release: {{ .Release.Name }}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          release: {{ .Release.Name }}
+          tier: airflow
+    ports:
+    - protocol: TCP
+      port: {{ .Values.gitSyncRelay.gitSync.webhookPort }}
+{{- if eq .Values.gitSyncRelay.repoShareMode "git_daemon" }}
+  - from:
+    - podSelector:
+        matchLabels:
+          release: {{ .Release.Name }}
+          tier: airflow
+    ports:
+    - protocol: TCP
+      port: 9418
+{{- end }}
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          "kubernetes.io/metadata.name": {{ .Values.platform.namespace }}
+      podSelector:
+        matchLabels:
+          app: houston
+          component: houston
+          release: {{ .Values.platform.release }}
+    {{ if .Values.authSidecar.enabled }}
+    - namespaceSelector:
+        matchLabels:
+          "network.openshift.io/policy-group": ingress
+    {{- if .Values.authSidecar.ingressAllowedNamespaces }}
+    - namespaceSelector:
+        matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: In
+            values: {{ .Values.authSidecar.ingressAllowedNamespaces | toJson }}
+    {{- end }}
+    {{ else }}
+    - namespaceSelector:
+        matchLabels:
+          "kubernetes.io/metadata.name": {{ .Values.platform.namespace }}
+      podSelector:
+        matchLabels:
+          component: {{ ternary "dp-ingress-controller" "cp-ingress-controller" (eq .Values.platform.mode "data") }}
+          release: {{ .Values.platform.release }}
+          tier: nginx
+    {{ end }}
+    ports:
+    - protocol: TCP
+      port: {{ .Values.gitSyncRelay.gitSync.webhookPort }}
+    {{ if .Values.authSidecar.enabled }}
+    - protocol: TCP
+      port: {{ .Values.authSidecar.port }}
+    {{- end -}}
+{{- end -}}

@@ -1,0 +1,13 @@
+apiVersion: v2
+appVersion: 2.4.3
+dependencies:
+- name: airflow
+  repository: https://github.com/astronomer/apc-airflow/releases/download/oss-helm-chart/1.17.3-astro
+  version: 1.17.3-astro
+description: Helm chart to deploy the Astronomer Platform Airflow module
+icon: https://airflow.apache.org/docs/apache-airflow/stable/_images/pin_large.png
+keywords:
+- astronomer
+- airflow
+name: airflow
+version: 1.17.20
