@@ -22,8 +22,8 @@ config:
   core:
     load_examples: "True"
 
-extraEnv:
-  - name: AIRFLOW_CONN_SPARK_K8S_CONN
+extraEnv: |
+  - name: AIRFLOW_VAR_HELM_RELEASE_NAME
     value: 'spark://k8s://https://kubernetes.default.svc'
 
 ingress:
