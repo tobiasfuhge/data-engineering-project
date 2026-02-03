@@ -55,7 +55,7 @@ createUserJob:
     - name: AIRFLOW_ADMIN_ROLE
       value: Admin
     - name: AIRFLOW_ADMIN_USERNAME
-      value: airflowadmin
+      value: admin
     - name: AIRFLOW_ADMIN_EMAIL
       value: admin@example.com
     - name: AIRFLOW_ADMIN_FIRSTNAME
