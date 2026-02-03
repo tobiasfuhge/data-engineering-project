@@ -38,11 +38,11 @@ ingress:
     path: "/"
     pathType: "ImplementationSpecific"
 
-# images:
-#   airflow:
-#     repository: ghcr.io/tobiasfuhge/airflow-spark-custom
-#     tag: "1.0"
-#     pullPolicy: Always
+images:
+  airflow:
+    repository: ghcr.io/tobiasfuhge/airflow-spark-custom
+    tag: "1.0"
+    pullPolicy: Always
 
 dags:
   gitSync:
