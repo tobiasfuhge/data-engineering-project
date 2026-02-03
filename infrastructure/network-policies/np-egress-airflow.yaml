@@ -4,9 +4,9 @@ metadata:
   name: allow-airflow-to-data-storage-and-internet
   namespace: airflow
 spec:
-  podSelector: 
+  podSelector:
     matchLabels:
-      component: api-server
+      app: airflow
   policyTypes:
   - Egress
   egress:
