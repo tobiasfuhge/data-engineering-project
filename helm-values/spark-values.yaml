@@ -4,7 +4,7 @@ global:
 image:
   registry: ghcr.io
   repository: tobiasfuhge/spark-custom
-  tag: 1.0
+  tag: "1.0"
   pullPolicy: IfNotPresent
 
 master:
