@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-airflow-to-spark
+  namespace: spark
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: master
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: airflow
+    ports:
+    - protocol: TCP
+      port: 7077
+    - protocol: TCP
+      port: 8080
