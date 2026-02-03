@@ -19,6 +19,8 @@ statsd:
 config:
   api:
     expose_config: 'True'
+  core:
+    load_examples: "True"
 
 ingress:
   enabled: true
@@ -50,10 +52,6 @@ createUserJob:
 migrateDatabaseJob:
   useHelmHooks: false
   applyCustomEnv: false
-
-config:
-  core:
-    load_examples: "True"
 
 workers:
   persistence:
