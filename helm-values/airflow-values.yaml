@@ -63,7 +63,7 @@ dags:
     enabled: true
     repo: https://github.com/tobiasfuhge/ml-pipeline.git
     branch: main
-    subPath: ""
+    subPath: "dags"
 
 createUserJob:
   useHelmHooks: false
