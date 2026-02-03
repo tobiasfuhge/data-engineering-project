@@ -17,15 +17,10 @@ statsd:
   enabled: false
 
 config:
-  # Hier überschreiben wir die Defaults aus dem Chart:
-  core:
-    load_examples: "False"
-    # DIESER WERT EXISTIERT IM DEFAULT NICHT, IST ABER FÜR AF3 PFLICHT:
-    internal_api_url: "http://airflow-api-server:8080"
-    
   api:
-    # Erlaubt dem Task SDK, sich am API-Server anzumelden
-    auth_backends: "airflow.api.auth.backend.session,airflow.api.auth.backend.basic_auth"
+    expose_config: 'True'
+  core:
+    load_examples: "True"
 
 ingress:
   enabled: true
