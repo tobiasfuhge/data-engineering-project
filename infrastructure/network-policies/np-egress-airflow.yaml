@@ -8,6 +8,10 @@ spec:
   policyTypes:
   - Egress
   egress:
+    # HINZUGEFÜGT: Zugriff auf alle Pods im selben Namespace erlauben
+  - to:
+    - podSelector: {}
+  # Zugriff auf Datenbank
   # Zugriff auf Datenbank
   - to:
     - namespaceSelector:
