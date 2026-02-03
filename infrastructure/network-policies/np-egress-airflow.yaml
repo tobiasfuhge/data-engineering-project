@@ -1,20 +1,22 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-airflow-to-data-storage
+  name: allow-airflow-to-data-storage-and-internet
   namespace: airflow
 spec:
   podSelector: {} # Alle Pods im Namespace airflow
   policyTypes:
   - Egress
   egress:
+  # Zugriff auf Datenbank
   - to:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: data-storage
     ports:
     - protocol: TCP
-      port: 5432  # Postgres
+      port: 5432
+  # Zugriff auf kube-dns
   - to:
     - namespaceSelector:
         matchLabels:
@@ -25,3 +27,10 @@ spec:
     ports:
     - protocol: UDP
       port: 53
+  # Zugriff auf Internet (GitHub)
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 443
