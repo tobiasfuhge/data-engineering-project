@@ -22,6 +22,16 @@ config:
   core:
     load_examples: "True"
 
+env:
+  - name: AIRFLOW__CORE__FERNET_KEY
+    value: WW3Sj9-DRlmtlTzXjx5ADbaYQvlZb6QDuwJXpVTEqE8=
+  - name: AIRFLOW__WEBSERVER__SECRET_KEY
+    value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
+  - name: AIRFLOW__API__SECRET_KEY
+    value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
+  - name: AIRFLOW__API_AUTH__JWT_SECRET
+    value: 4jpKilYpB2idG8U8zZ38WhCUI8MB+QH/PjbsHsoSm8uyencWHi0lotKsuLYgs1ML
+
 extraEnv: |
   - name: AIRFLOW_VAR_HELM_RELEASE_NAME
     value: 'spark://k8s://https://kubernetes.default.svc'
