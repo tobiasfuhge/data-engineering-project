@@ -2,7 +2,7 @@ defaultAirflowRepository: apache/airflow
 defaultAirflowTag: "3.1.6"
 airflowVersion: "3.1.6"
 
-executor: "LocalExecutor"
+executor: "KubernetesExecutor"
 
 postgresql:
   enabled: false
