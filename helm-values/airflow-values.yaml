@@ -38,8 +38,12 @@ ingress:
     path: "/"
     pathType: "ImplementationSpecific"
 
-extraPipPackages:
-  - "apache-airflow-providers-apache-spark==4.1.3"
+images:
+  airflow:
+    repository: ghcr.io/tobiasfuhge/airflow-spark-custom
+    tag: "1.0"
+    pullPolicy: Always
+
 dags:
   gitSync:
     enabled: true
