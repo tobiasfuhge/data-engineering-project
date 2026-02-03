@@ -16,6 +16,10 @@ redis:
 statsd:
   enabled: false
 
+config:
+  api:
+    expose_config: 'True'
+
 ingress:
   enabled: true
   apiServer:
