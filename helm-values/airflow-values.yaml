@@ -33,6 +33,38 @@ ingress:
     pathType: "ImplementationSpecific"
 
 createUserJob:
+  enabled: true
+  defaultUser:
+    role: Admin
+    username: admin
+    email: admin@example.com
+    firstName: admin
+    lastName: user
+    password: admin
+  args:
+    - "bash"
+    - "-c"
+    # The format below is necessary to get `helm lint` happy
+    - |-
+      exec \
+      airflow {{ semverCompare ">=2.0.0" .Values.airflowVersion | ternary "users create" "create_user" }} "$@" -p "${AIRFLOW_ADMIN_PASSWORD}"
+    - --
+    - "-r"
+    - "{{ .Values.createUserJob.defaultUser.role }}"
+    - "-u"
+    - "{{ .Values.createUserJob.defaultUser.username }}"
+    - "-e"
+    - "{{ .Values.createUserJob.defaultUser.email }}"
+    - "-f"
+    - "{{ .Values.createUserJob.defaultUser.firstName }}"
+    - "-l"
+    - "{{ .Values.createUserJob.defaultUser.lastName }}"
+  env:
+  - name: AIRFLOW_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: airflow-admin-password
+        key: password
   useHelmHooks: false
   applyCustomEnv: false
 
