@@ -38,6 +38,8 @@ ingress:
     path: "/"
     pathType: "ImplementationSpecific"
 
+extraPipPackages:
+  - "apache-airflow-providers-apache-spark==4.1.3"
 dags:
   gitSync:
     enabled: true
