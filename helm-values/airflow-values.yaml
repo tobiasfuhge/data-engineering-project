@@ -33,14 +33,6 @@ ingress:
     pathType: "ImplementationSpecific"
 
 createUserJob:
-  enabled: true
-  defaultUser:
-    role: Admin
-    username: admin
-    email: admin@example.com
-    firstName: admin
-    lastName: user
-    password: admin
   args:
     - "bash"
     - "-c"
