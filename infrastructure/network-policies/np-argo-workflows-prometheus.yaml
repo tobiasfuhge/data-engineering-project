@@ -6,6 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
+      app.kubernetes.io/name: argo-workflows-workflow-controller
       app.kubernetes.io/component: workflow-controller
   policyTypes:
   - Ingress
