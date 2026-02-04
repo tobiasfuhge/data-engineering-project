@@ -15,8 +15,7 @@ spec:
           - path: notification.0.s3.object.key
             type: string
             value:
-              - "*.csv$"
-            comparator: "matches"        
+              - ".*\\.csv$"       
 
   triggers:
     - template:
