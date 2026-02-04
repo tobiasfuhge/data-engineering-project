@@ -20,7 +20,7 @@ spec:
       insecure: true
       accessKey:
         name: minio
-        key: rootUser
+        key: root-user
       secretKey:
         name: minio
-        key: rootPassword
+        key: root-password
