@@ -5,7 +5,7 @@ metadata:
   namespace: argo-events
 spec:
   template:
-    serviceAccountName: argo-events-sa
+    serviceAccountName: sa-read-data-storage-argo-events
   dependencies:
     - name: minio-dep
       eventSourceName: minio-input-eventsource
