@@ -23,31 +23,19 @@ controller:
       memory: 128Mi
   logFormat: text
   metrics:
-    # -- Deploy metrics service
     enabled: true
     service:
-      # -- Metrics service annotations
-      annotations: {}
-      # -- Metrics service labels
-      labels: {}
-      # -- Metrics service port
       servicePort: 8082
+      annotations: {}
+      labels: {}
     serviceMonitor:
-      # -- Enable a prometheus ServiceMonitor
       enabled: true
-      # -- Prometheus ServiceMonitor interval
       interval: 30s
-      # -- Prometheus [RelabelConfigs] to apply to samples before scraping
+      namespace: "argo-events"
+      additionalLabels:
+        release: prometheus-stack
       relabelings: []
-      # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
-      # -- Prometheus ServiceMonitor selector
-      selector: {}
-        # prometheus: kube-prometheus
-      # -- Prometheus ServiceMonitor namespace
-      namespace: "argo-events" # "monitoring"
-      # -- Prometheus ServiceMonitor labels
-      additionalLabels: {}
 
 extraObjects:
   - apiVersion: argoproj.io/v1alpha1
