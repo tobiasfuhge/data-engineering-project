@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: workflow-controller
+      app.kubernetes.io/component: workflow-controller
   policyTypes:
   - Ingress
   ingress:
