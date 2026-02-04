@@ -27,7 +27,7 @@ serviceMonitor:
   interval: "30s"
   labels:
     release: "prometheus-stack"
-  namespace: "prometheus-stack"
+  namespace: "mlops"
   telemetryPath: "/metrics"
   timeout: "10s"
   useServicePort: true
