@@ -22,6 +22,8 @@ artifactRoot:
       keyOfAccessKeyId: "root-user"
       keyOfSecretAccessKey: "root-password"
 
+serviceMonitor:
+  enabled: false
 
 extraEnvVars:
   MLFLOW_S3_ENDPOINT_URL: "http://minio.data-storage.svc.cluster.local:9000"
