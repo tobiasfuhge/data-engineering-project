@@ -16,7 +16,7 @@ spec:
             type: string
             value:
               - "*.csv$"
-            comparator: "="        
+            comparator: "matches"        
 
   triggers:
     - template:
