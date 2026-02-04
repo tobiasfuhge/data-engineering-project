@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: argo-events
+  namespace: argo-events
+spec:
+  selector:
+    matchExpressions:
+      - {key: controller, operator: In, values: ["eventsource-controller","sensor-controller","eventbus-controller"]}
+  namespaceSelector:
+    matchNames:
+      - argo-events
+  podMetricsEndpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
