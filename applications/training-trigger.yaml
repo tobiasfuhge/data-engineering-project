@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: namespaces
-  namespace: training-trigger
+  name: training-trigger
+  namespace: argocd
 spec:
   project: default
 
   source:
     repoURL: https://github.com/tobiasfuhge/data-engineering-project.git
     targetRevision: main
-    path: namespaces
+    path: training-trigger
 
   destination:
     server: https://kubernetes.default.svc
