@@ -23,7 +23,14 @@ artifactRoot:
       keyOfSecretAccessKey: "root-password"
 
 serviceMonitor:
-  enabled: false
+  enabled: true
+  interval: "30s"
+  labels:
+    release: "prometheus-stack"
+  namespace: "prometheus-stack"
+  telemetryPath: "/metrics"
+  timeout: "10s"
+  useServicePort: true
 
 extraEnvVars:
   MLFLOW_S3_ENDPOINT_URL: "http://minio.data-storage.svc.cluster.local:9000"
