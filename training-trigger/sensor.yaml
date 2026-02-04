@@ -15,7 +15,7 @@ spec:
           - path: notification.0.s3.object.key
             type: string
             value:
-              - ".*train.*\\.csv$"
+              - ".*\\.csv$"
             comparator: "="        
 
   triggers:
@@ -38,7 +38,7 @@ spec:
                 entrypoint: main
                 arguments:
                   parameters:
-                    - name: input-object
+                    - name: filename
                       value: ""
                 workflowTemplateRef:
                   name: v5-final-parallel-ml-pipeline-cncs4
