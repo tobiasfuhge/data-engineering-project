@@ -16,7 +16,7 @@ backendStore:
 artifactRoot:
   s3:
     enabled: true
-    bucket: "mlflow"
+    bucket: "mlflow-artifacts"
     existingSecret:
       name: "minio"
       keyOfAccessKeyId: "root-user"
