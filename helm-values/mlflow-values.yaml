@@ -6,7 +6,7 @@ backendStore:
     enabled: true
     host: "postgres.data-storage.svc.cluster.local"
     port: 5432
-    database: "ds_db"
+    database: "mlflow_db"
 
   existingDatabaseSecret:
     name: postgres-admin
