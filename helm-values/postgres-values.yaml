@@ -1,6 +1,6 @@
 auth:
   existingSecret: postgres-admin
-  database: mlflow_new
+  database: ds_db
   username: mlops
   secretKeys:
     userPasswordKey: postgres-password
