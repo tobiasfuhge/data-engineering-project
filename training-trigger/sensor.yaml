@@ -40,7 +40,7 @@ spec:
                     - name: filename
                       value: ""
                 workflowTemplateRef:
-                  name: v8-final-parallel-ml-pipeline-cncs4
+                  name: v8-final-parallel-ml-pipeline-qkhh9
           parameters:
             - src:
                 dependencyName: minio-dep
