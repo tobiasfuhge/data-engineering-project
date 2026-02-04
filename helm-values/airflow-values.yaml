@@ -14,7 +14,7 @@ redis:
   enabled: false
 
 statsd:
-  enabled: false
+  enabled: true
 
 config:
   api:
