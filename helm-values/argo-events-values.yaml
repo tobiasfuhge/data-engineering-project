@@ -9,6 +9,11 @@ controller:
   replicas: 1
   image:
     pullPolicy: IfNotPresent
+  rbac:
+    enabled: true
+    namespaced: false
+  serviceAccountName:
+    create: true
   resources:
     limits:
       cpu: 200m
