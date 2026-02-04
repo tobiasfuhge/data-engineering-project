@@ -31,7 +31,7 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: v5-final-parallel-ml-pipeline-
+                generateName: v8-final-parallel-ml-pipeline-
                 namespace: argo-workflows
               spec:
                 entrypoint: main
@@ -40,7 +40,7 @@ spec:
                     - name: filename
                       value: ""
                 workflowTemplateRef:
-                  name: v5-final-parallel-ml-pipeline-cncs4
+                  name: v8-final-parallel-ml-pipeline-cncs4
           parameters:
             - src:
                 dependencyName: minio-dep
